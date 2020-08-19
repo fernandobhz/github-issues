@@ -1,14 +1,17 @@
 import { Router } from "express";
 import { add } from "./add";
+import { search } from "./search";
 
 export const router = Router();
 
 /**
  * Seach endpoint, client should perform search libs by name here
  */
-router.get("/search", (req, res) => {
-  res.send("WIP");
-});
+router.get("/search", (req, res, next) =>
+  search(req.query.name)
+    .then(data => res.json(data))
+    .catch(next)
+);
 
 /**
  * Add endpoint, with fullname of lib, client should ask for their addition here
