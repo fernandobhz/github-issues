@@ -3,18 +3,32 @@ import axiosRateLimit from "axios-rate-limit";
 
 import { GITHUB_API_ENDPOINT, GITHUB_TOKEN } from "../core/config";
 
-const api = axiosRateLimit(
-  axios.create({
-    baseURL: GITHUB_API_ENDPOINT,
-    headers: {
-      Authorization: `token ${GITHUB_TOKEN}`,
-    },
-  }),
-  {
-    maxRequests: 60, // Unauthenticated rate limit
-    perMilliseconds: 1000 * 3600, // Per hour
-  }
-);
+let api;
+
+if (GITHUB_TOKEN) {
+  api = axiosRateLimit(
+    axios.create({
+      baseURL: GITHUB_API_ENDPOINT,
+      headers: {
+        Authorization: `token ${GITHUB_TOKEN}`,
+      },
+    }),
+    {
+      maxRequests: 5000, // Authenticated rate limit
+      perMilliseconds: 1000 * 3600, // Per hour
+    }
+  );
+} else {
+  api = axiosRateLimit(
+    axios.create({
+      baseURL: GITHUB_API_ENDPOINT,
+    }),
+    {
+      maxRequests: 60, // Unauthenticated rate limit
+      perMilliseconds: 1000 * 3600, // Per hour
+    }
+  );
+}
 
 const updateRateLimit = () => {
   api.get("/rate_limit").then(res => {

@@ -9,6 +9,8 @@ export function errorHandler(err, req, res, next) {
       message: err.message,
     });
   } else {
+    // eslint-disable-next-line no-debugger
+    debugger;
     console.error(err);
     res.status(500).json({
       status: 500,

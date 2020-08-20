@@ -45,6 +45,7 @@ app.get("/api-docs.json", (req, res) => res.json(swaggerSpec));
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.get("/", (req, res) => res.redirect("/api-docs"));
 
+app.use(helpers.analytics.register);
 app.use("/users", apis.users.router);
 app.use("/repositories", auth, apis.repositories.router);
 app.use(errorHandler);
