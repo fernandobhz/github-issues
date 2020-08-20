@@ -6,19 +6,22 @@
 * BCRYPT_ROUNDS: How many rounds bcrypt should use
 * JWT_SECRET: A secret password to encrypt JWT
 * MONGO_CONNECTION_STRING: The mongodb connection string
-* GITHUB_API_ENDPOINT: The github api with optional credentials, eg: https://USERNAME:PASSWORD@api.github.com/
+* GITHUB_API_ENDPOINT: The github api, nowadays: https://api.github.com/
 
 ## GITHub Credentials
 *IMPORTANT*
-You should inform a credential in the github url because it'll upgrade your rate limit from 60 requests per hour to 5000 requests per hour.
+You should inform a GITHUB_TOKEN in .env file
+It'll upgrade your rate limit from 60 requests per hour to 5000 requests per hour.
 
 https://developer.github.com/v3/#rate-limiting
+
+https://github.com/settings/tokens
 
 ## ADRs
 
 ### Database
 
-I would use DynamoDB, but I couldn't use any cloud resources, so the second most performatic option was mongodb. If I had more time I would use Redis to keep the stats.
+I would use DynamoDB, but I couldn't use any cloud resources, so the second most performatic option was mongodb.
 
 ### Backend
 
@@ -62,6 +65,7 @@ But in future we should check if there is a way to get full results from github 
 
 ## TODO
 
+* Store searchs and visits
 * Some manuals tests with small libs
 * Some manuals test with big libs
 * Unit tests
