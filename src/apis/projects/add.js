@@ -1,4 +1,5 @@
 import * as models from "../../models";
+import * as helpers from "../../helpers";
 import { ExposableError } from "../../classes/errors";
 
 /**
@@ -31,5 +32,7 @@ import { ExposableError } from "../../classes/errors";
 export const add = async name => {
   const project = await models.projects.findOne({ name });
   if (project) throw new ExposableError("This project already exists in database");
+  // Fire and forget the method to update the repository issues
+  helpers.issues.processOne(name);
   return models.projects.create({ name });
 };

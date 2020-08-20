@@ -6,6 +6,7 @@ export const router = Router();
 
 /**
  * Seach endpoint, client should perform search libs by name here
+ * I'm assuming here that frontend will open a dropdown menu after user hit enter with possible values
  */
 router.get("/search", (req, res, next) =>
   search(req.query.name)
@@ -14,7 +15,7 @@ router.get("/search", (req, res, next) =>
 );
 
 /**
- * Add endpoint, with fullname of lib, client should ask for their addition here
+ * Add endpoint, client should ask for their addition here providing the fullname of repositoy
  */
 router.post("/add", (req, res, next) =>
   add(req.body.name)
@@ -23,17 +24,8 @@ router.post("/add", (req, res, next) =>
 );
 
 /**
- * Project issues endpoint, this perform a query on github to get the current issues
- * After, this endpoint will store the data on database
- * Finally return the current results to client
+ * All database issues
  */
-router.get("/:project/issues", (req, res) => {
+router.get("/issues", (req, res) => {
   res.send("WIP");
-}); // github issues
-
-/**
- * Project issues history, this endpoint will collect all history issues from database
- */
-router.get("/:project/issues/history", (req, res) => {
-  res.send("WIP");
-}); // get list stored data
+});

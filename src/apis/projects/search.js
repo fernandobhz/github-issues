@@ -1,4 +1,3 @@
-import * as models from "../../models";
 import * as helpers from "../../helpers";
 
 /**
@@ -19,11 +18,12 @@ import * as helpers from "../../helpers";
  *        name: name
  *        required: true
  *        description: The term to search for
- *        type: string
  *        example: react
+ *        scheme:
+ *          type: string
  */
 export const search = async name => {
   const searchResult = await helpers.github.search(name);
   const repos = searchResult.items.map(item => item.full_name);
   return repos;
-}
+};
