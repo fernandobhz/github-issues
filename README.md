@@ -66,7 +66,6 @@ But in future we should check if there is a way to get full results from github 
 
 ## TODO
 
-* Store searchs and visits
 * Some manuals tests with small libs
 * Some manuals test with big libs
 * Unit tests
