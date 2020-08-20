@@ -1,11 +1,14 @@
 import axios from "axios";
 import axiosRateLimit from "axios-rate-limit";
 
-import { GITHUB_API_ENDPOINT } from "../core/config";
+import { GITHUB_API_ENDPOINT, GITHUB_TOKEN } from "../core/config";
 
 const api = axiosRateLimit(
   axios.create({
     baseURL: GITHUB_API_ENDPOINT,
+    headers: {
+      Authorization: `token ${GITHUB_TOKEN}`,
+    },
   }),
   {
     maxRequests: 60, // Unauthenticated rate limit
