@@ -33,6 +33,16 @@
 * POST /users/login
 * POST /users/close-account
 
+## ADRs
+
+### Database
+
+I would use DynamoDB, but I couldn't use any cloud resources, so the second most performatic option was mongodb.
+
+### Backend
+
+I would use AWS Serverless (sam cli), but I couldn't use any cloud resources, so the second option was a monolith that is possible to deploy to azure appservice or heroku or build an docker container.
+
 ## Technical debts
 
 ### helpers.github.search
