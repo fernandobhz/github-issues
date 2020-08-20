@@ -42,3 +42,7 @@ We are not checking if the result are complete or not.
 We exepct that result even if incomplete, it'll return the most popular repositories with given name
 But in future we should check if there is a way to get full results from github api.
 
+### Time track
+
+* Aug 18, 2020 5:10 PM  to  Aug 19, 2020 2:30 AM  =  6:50
+
