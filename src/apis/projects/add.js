@@ -33,6 +33,6 @@ export const add = async name => {
   const project = await models.projects.findOne({ name });
   if (project) throw new ExposableError("This project already exists in database");
   // Fire and forget the method to update the repository issues
-  helpers.issues.processOne(name);
+  helpers.issues.processNewRepository(name);
   return models.projects.create({ name });
 };
