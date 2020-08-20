@@ -8,7 +8,7 @@ const issueLambda = (issue, repository) => ({
   number: issue.number,
   created_at: issue.created_at,
   closed_at: issue.closed_at,
-  age: issue.closed_at ? issue.closed_at - issue.created_at : null,
+  age: issue.closed_at ? new Date(issue.closed_at) - new Date(issue.created_at) : null,
 });
 
 /**
@@ -37,8 +37,8 @@ const updateRepository = async repository => {
   await Promise.all(
     issues.map(async issue => {
       const existing = await models.issues.findOne({ repository: repository.fullName, number: issue.number });
-      if (!existing) return models.issues.create(issues);
-      existing.closed_at = issues.closed_at;
+      if (!existing) return models.issues.create(issue);
+      existing.closed_at = issue.closed_at;
       existing.age = issue.age;
       return existing.save();
     })
@@ -49,9 +49,34 @@ const updateRepository = async repository => {
  * That will be called every hour by app.js
  */
 export const processEntireDatabase = async () => {
-  /**
-   * That function is a way to not flooding the memory, eslint is wrong here
-   */
-  // eslint-disable-next-line no-restricted-syntax
-  for await (const repository of models.repositories.find()) updateRepository(repository);
+  try {
+    // eslint-disable-next-line no-console
+    console.log("Starting processEntireDatabase");
+
+    const repositories = await models.repositories.find();
+
+    /*
+     * Loops with async call inside of it DON'T block the thred or event loop ou tasks queue
+     * See my POC about it here: https://github.com/fernandobhz/poc-nodejs-for-await-blocking
+     */
+    // eslint-disable-next-line no-restricted-syntax
+    for (const repository of repositories) {
+      /**
+       * I need that each loop occurs after the previous one
+       */
+      // eslint-disable-next-line no-await-in-loop
+      await updateRepository(repository);
+    }
+
+    // eslint-disable-next-line no-console
+    console.log("Finishing successfulyy processEntireDatabase");
+    return true;
+  } catch (err) {
+    // eslint-disable-next-line no-console
+    console.log("Finishing with error processEntireDatabase");
+    // eslint-disable-next-line no-console
+    console.error(err);
+    // It might be a good idea to send email to the dev team.
+    return false;
+  }
 };

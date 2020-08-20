@@ -1,6 +1,8 @@
 import { Router } from "express";
 import { add } from "./add";
 import { search } from "./search";
+import { stats } from "./stats";
+import { update } from "./update";
 
 export const router = Router();
 
@@ -24,8 +26,19 @@ router.post("/add", (req, res, next) =>
 );
 
 /**
- * All database issues
+ * All repositories stats
  */
-router.get("/issues", (req, res) => {
-  res.send("WIP");
-});
+router.get("/stats", (req, res, next) =>
+  stats()
+    .then(data => res.json(data))
+    .catch(next)
+);
+
+/**
+ * All repositories stats
+ */
+router.post("/update", (req, res, next) =>
+  update()
+    .then(() => res.status(204).end())
+    .catch(next)
+);

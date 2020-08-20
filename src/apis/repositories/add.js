@@ -9,7 +9,7 @@ import { ExposableError } from "../../classes/errors";
  *  post:
  *    tags:
  *      - Repository
- *    description: Add a Repository to database
+ *    description: Add a repository to database, the system will update the stats every hour
  *    produces:
  *      - application/json
  *    responses:
@@ -27,7 +27,7 @@ import { ExposableError } from "../../classes/errors";
  *          properties:
  *            fullName:
  *              type: string
- *              example: react
+ *              example: facebook/react
  */
 export const add = async fullName => {
   const existingRepository = await models.repositories.findOne({ fullName });

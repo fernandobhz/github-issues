@@ -6,7 +6,7 @@ const schema = new Schema({
     minlength: 2,
     maxlength: 1000,
     required: [true, "Name is required"],
-  }
+  },
 });
 
 export const repositories = model("repositories", schema);

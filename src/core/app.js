@@ -6,6 +6,7 @@ import compression from "compression";
 import swaggerUi from "swagger-ui-express";
 import swaggerJSDoc from "swagger-jsdoc";
 import { errorHandler } from "./error-handler";
+import { auth } from "./auth";
 import * as apis from "../apis";
 import * as helpers from "../helpers";
 
@@ -43,11 +44,12 @@ const swaggerSpec = swaggerJSDoc({
 app.get("/api-docs.json", (req, res) => res.json(swaggerSpec));
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.get("/", (req, res) => res.redirect("/api-docs"));
+
 app.use("/users", apis.users.router);
-app.use("/repositories", apis.repositories.router);
+app.use("/repositories", auth, apis.repositories.router);
 app.use(errorHandler);
 
 /**
- * It should run every hour
+ * It should run every day
  */
-setInterval(helpers.issues.processEntireDatabase, 1000 * 3600);
+setInterval(helpers.issues.processEntireDatabase, 1000 * 3600 * 24);

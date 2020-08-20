@@ -25,7 +25,6 @@ const schema = new Schema({
   },
   closed_at: {
     type: Date,
-    required: [true, "closed_at is required"],
   },
   age: {
     type: Number,

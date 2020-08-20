@@ -1,21 +1,51 @@
 import axios from "axios";
+import axiosRateLimit from "axios-rate-limit";
+
 import { GITHUB_API_ENDPOINT } from "../core/config";
 
-const api = axios.create({
-  baseURL: GITHUB_API_ENDPOINT,
-});
+const api = axiosRateLimit(
+  axios.create({
+    baseURL: GITHUB_API_ENDPOINT,
+  }),
+  {
+    maxRequests: 60, // Unauthenticated rate limit
+    perMilliseconds: 1000 * 3600, // Per hour
+  }
+);
+
+const updateRateLimit = () => {
+  api.get("/rate_limit").then(res => {
+    // eslint-disable-next-line no-console
+    console.log(`Setting new rate limit to: ${res.data.resources.core.limit}`);
+    api.setRateLimitOptions({
+      maxRequests: res.data.resources.core.limit,
+      perMilliseconds: 1000 * 3600,
+    });
+  });
+};
+
+/**
+ * Set rate limit on app startup
+ */
+updateRateLimit();
+
+/**
+ * Check every hour about new rate limit,
+ * the app could be initiated with a low rate limit
+ */
+setInterval(updateRateLimit, 1000 * 3600);
 
 /**
  * It'll fetch all pages of and resource in github api using http verb GET
  * @param {string} resource The resource that are you looking for, eg: /repos/facebook/react/issues
  * @param {function} lambda An arrow function to transform results, you might not looking for entire result of github
- * @param {object} params The request params, that where you sould put query string parameters, there is no need to inform the per_page or page params
+ * @param {object} paramsWithoutPagination The request params, that where you sould put query string parameters, there is no need to inform the per_page or page params
  */
-const fetchAllPages = async (resource, lambda, params = {}) => {
+const fetchAllPages = async (resource, lambda, paramsWithoutPagination = {}) => {
   const results = [];
 
-  const paramsWithPagination = {
-    ...params,
+  const params = {
+    ...paramsWithoutPagination,
     per_page: 100,
     page: 1,
   };
@@ -23,9 +53,6 @@ const fetchAllPages = async (resource, lambda, params = {}) => {
   /**
    * Loops with async call inside of it DON'T block the thred or event loop ou tasks queue
    * See my POC about it here: https://github.com/fernandobhz/poc-nodejs-for-await-blocking
-   *
-   * An possible improvement of that function would be requesting in parallel the first/next
-   * 10 pages, and after analise if there is more pages or not, and keep making new requests
    */
 
   /**
@@ -41,7 +68,7 @@ const fetchAllPages = async (resource, lambda, params = {}) => {
      * Each iteration DEPENDS of previous one
      */
     // eslint-disable-next-line no-await-in-loop
-    const { data } = await api.get(resource, paramsWithPagination);
+    const { data } = await api.get(resource, { params });
 
     /**
      * If the users pass an lambda (arrow functions in js)
@@ -51,7 +78,7 @@ const fetchAllPages = async (resource, lambda, params = {}) => {
     else results.push(...data);
 
     if (data.length < 100) break;
-    else paramsWithPagination.page += 1;
+    else params.page += 1;
   }
 
   return results;
@@ -65,10 +92,10 @@ const fetchAllPages = async (resource, lambda, params = {}) => {
  * @param {function} lambda An arrow function to transform results, you might not looking for entire result of github
  */
 export const search = (name, lambda) =>
-  api.get("/search/repositories", { params: { q: name } }).then(data => data.map(lambda));
+  api.get("/search/repositories", { params: { q: name } }).then(({ data }) => data.items.map(lambda));
 
 /**
  * It'll list all issues for a given repository
  * @param {string} fullName The full name of repository eg: facebook/react
  */
-export const issues = (fullName, lambda) => fetchAllPages(`/repos/${fullName}/issues`, lambda);
+export const issues = (fullName, lambda) => fetchAllPages(`/repos/${fullName}/issues`, lambda, { state: "all" });
