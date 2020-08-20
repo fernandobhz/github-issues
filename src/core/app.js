@@ -7,6 +7,7 @@ import swaggerUi from "swagger-ui-express";
 import swaggerJSDoc from "swagger-jsdoc";
 import { errorHandler } from "./error-handler";
 import * as apis from "../apis";
+import * as helpers from "../helpers";
 
 export const app = express();
 
@@ -45,3 +46,8 @@ app.get("/", (req, res) => res.redirect("/api-docs"));
 app.use("/users", apis.users.router);
 app.use("/repositories", apis.repositories.router);
 app.use(errorHandler);
+
+/**
+ * It should run every hour
+ */
+setInterval(helpers.issues.processEntireDatabase, 1000 * 3600);

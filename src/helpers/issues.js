@@ -45,6 +45,9 @@ const updateRepository = async repository => {
   );
 };
 
+/**
+ * That will be called every hour by app.js
+ */
 export const processEntireDatabase = async () => {
   /**
    * That function is a way to not flooding the memory, eslint is wrong here
