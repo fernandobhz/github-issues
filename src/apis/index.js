@@ -1,4 +1,4 @@
 import * as users from "./users";
-import * as projects from "./projects";
+import * as repositories from "./repositories";
 
-export { users, projects };
+export { users, repositories };

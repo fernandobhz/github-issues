@@ -1,5 +1,5 @@
 import { users } from "./users";
-import { projects } from "./projects";
+import { repositories } from "./repositories";
 import { issues } from "./issues";
 
-export { users, projects, issues };
+export { users, repositories, issues };

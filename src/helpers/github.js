@@ -8,7 +8,7 @@ const api = axios.create({
 /**
  * It'll fetch all pages of and resource in github api using http verb GET
  * @param {string} resource The resource that are you looking for, eg: /repos/facebook/react/issues
- * @param {Function} lambda An arrow function to transform results, you might not looking for entire result of github
+ * @param {function} lambda An arrow function to transform results, you might not looking for entire result of github
  * @param {object} params The request params, that where you sould put query string parameters, there is no need to inform the per_page or page params
  */
 const fetchAllPages = async (resource, lambda, params = {}) => {
@@ -62,11 +62,10 @@ const fetchAllPages = async (resource, lambda, params = {}) => {
  * WARNING: It'll only return the most popular results, since github api
  * limit this query with a timout, so, there is no guarentee that all repos will be returned
  * @param {string} name Part or complete name of a repository, eg: react
+ * @param {function} lambda An arrow function to transform results, you might not looking for entire result of github
  */
-export const search = async name => {
-  const { data } = await api.get("/search/repositories", { params: { q: name } });
-  return data;
-};
+export const search = (name, lambda) =>
+  api.get("/search/repositories", { params: { q: name } }).then(data => data.map(lambda));
 
 /**
  * It'll list all issues for a given repository

@@ -4,11 +4,11 @@ import * as helpers from "../../helpers";
 /**
  * @swagger
  *
- * /projects/issues:
+ * /repositories/issues:
  *  get:
  *    tags:
- *      - Project
- *    description: List all issues of project
+ *      - Repository
+ *    description: List all issues of repository
  *    produces:
  *      - application/json
  *    responses:

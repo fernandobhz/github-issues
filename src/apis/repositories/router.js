@@ -18,7 +18,7 @@ router.get("/search", (req, res, next) =>
  * Add endpoint, client should ask for their addition here providing the fullname of repositoy
  */
 router.post("/add", (req, res, next) =>
-  add(req.body.name)
+  add(req.body.fullName)
     .then(data => res.status(201).json(data))
     .catch(next)
 );

@@ -1,7 +1,7 @@
 import { model, Schema } from "mongoose";
 
 const schema = new Schema({
-  name: {
+  fullName: {
     type: String,
     minlength: 2,
     maxlength: 1000,
@@ -9,4 +9,4 @@ const schema = new Schema({
   }
 });
 
-export const projects = model("projects", schema);
+export const repositories = model("repositories", schema);

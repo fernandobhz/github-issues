@@ -5,11 +5,11 @@ import { ExposableError } from "../../classes/errors";
 /**
  * @swagger
  *
- * /projects/add:
+ * /repositories/add:
  *  post:
  *    tags:
- *      - Project
- *    description: Add a project to database
+ *      - Repository
+ *    description: Add a Repository to database
  *    produces:
  *      - application/json
  *    responses:
@@ -23,16 +23,17 @@ import { ExposableError } from "../../classes/errors";
  *        schema:
  *          type: object
  *          required:
- *            - name
+ *            - fullName
  *          properties:
- *            name:
+ *            fullName:
  *              type: string
  *              example: react
  */
-export const add = async name => {
-  const project = await models.projects.findOne({ name });
-  if (project) throw new ExposableError("This project already exists in database");
+export const add = async fullName => {
+  const existingRepository = await models.repositories.findOne({ fullName });
+  if (existingRepository) throw new ExposableError("This repository already exists in database");
+  const newRepository = await models.repositories.create({ fullName });
   // Fire and forget the method to update the repository issues
-  helpers.issues.processNewRepository(name);
-  return models.projects.create({ name });
+  helpers.issues.addNewRepository(newRepository);
+  return newRepository;
 };

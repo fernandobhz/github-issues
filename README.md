@@ -39,6 +39,6 @@
 
 The github search api says that results might be incomplete due timeout
 We are not checking if the result are complete or not.
-We exepct that result even if incomplete, it'll return the most popular projects with given name
+We exepct that result even if incomplete, it'll return the most popular repositories with given name
 But in future we should check if there is a way to get full results from github api.
 

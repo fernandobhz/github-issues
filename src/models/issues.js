@@ -5,14 +5,9 @@ const schema = new Schema({
     type: Number,
     required: [true, "id is required"],
   },
-  project: {
-    /**
-     *  I'm new to mongodb and I'm not know every aspect of references in mongodb, so I won't use it
-     *  But I know if we store the project _id here it makes possible to "join" these documents
-     *  If I have time I'll implement this
-     */
+  repository: {
     type: String,
-    required: [true, "project is required"],
+    required: [true, "repository is required"],
   },
   title: {
     type: String,

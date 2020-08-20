@@ -3,11 +3,11 @@ import * as helpers from "../../helpers";
 /**
  * @swagger
  *
- * /projects/search:
+ * /repositories/search:
  *  get:
  *    tags:
- *      - Project
- *    description: Search project on github api
+ *      - Repository
+ *    description: Search repository on github api
  *    produces:
  *      - application/json
  *    responses:
@@ -22,8 +22,4 @@ import * as helpers from "../../helpers";
  *        scheme:
  *          type: string
  */
-export const search = async name => {
-  const searchResult = await helpers.github.search(name);
-  const repos = searchResult.items.map(item => item.full_name);
-  return repos;
-};
+export const search = async name => helpers.github.search(name, item => item.full_name);
