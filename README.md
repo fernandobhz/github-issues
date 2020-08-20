@@ -2,11 +2,11 @@
 
 ## ENV Vars
 
-* PORT: The por that this backup should listen to
+* PORT: The port that this backend should listen to
 * BCRYPT_ROUNDS: How many rounds bcrypt should use
 * JWT_SECRET: A secret password to encrypt JWT
 * MONGO_CONNECTION_STRING: The mongodb connection string
-* GITHUB_API_ENDPOINT: The github api, nowadays: https://api.github.com/
+* GITHUB_API_ENDPOINT: The github api, this is optional there is a default value to "https://api.github.com/"
 
 ## GITHub Credentials
 *IMPORTANT*
@@ -33,6 +33,7 @@ I would use AWS Serverless (sam cli), but I couldn't use any cloud resources, so
 
 All processing occurs in run-time in memory without any fault tolerance, even network fail.
 All the pagination process should be stored to database to be possible to continue where it stops
+It would be a good fit a RabbitMQ as well.
 
 ### helpers.github.search
 
@@ -56,7 +57,7 @@ But in future we should check if there is a way to get full results from github 
 ## Please keep using
 
 * Git Flow
-* Conventional Commits (feat, fix, refactor, chore, docs, sytle, perf, vendor, test, etc..)
+* Conventional Commits (feat, fix, refactor, chore, doc, sytle, perf, vendor, test, etc..
 
 ### Time track
 
