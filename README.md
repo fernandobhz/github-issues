@@ -54,5 +54,5 @@ But in future we should check if there is a way to get full results from github 
 
 ### Time track
 
-* Aug 18, 2020 5:10 PM  to  Aug 19, 2020 2:30 AM  =  6:50
+* Aug 18, 2020 5:10 PM  to  Aug 19, 2020 2:40 AM  =  7:30
 
