@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
-import { ExposableError } from "../classes/errors";
+import { ExposableError } from "../errors";
 
 export function errorHandler(err, req, res, next) {
   if (err instanceof ExposableError) {

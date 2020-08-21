@@ -1,6 +1,6 @@
 import * as models from "../../models";
 import * as helpers from "../../helpers";
-import { ExposableError } from "../../classes/errors";
+import { ExposableError } from "../../errors";
 
 /**
  * @swagger

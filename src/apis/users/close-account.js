@@ -1,6 +1,6 @@
 import * as models from "../../models";
 import * as helpers from "../../helpers";
-import { UnauthorizedError } from "../../classes/errors";
+import { UnauthorizedError } from "../../errors";
 
 /**
  * @swagger

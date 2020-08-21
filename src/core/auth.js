@@ -1,4 +1,4 @@
-import { UnauthorizedError } from "../classes/errors";
+import { UnauthorizedError } from "../errors";
 
 export const auth = (req, res, next) => {
   if (req.who) req.auth = req.who;
