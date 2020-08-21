@@ -84,5 +84,6 @@ It continues on next repository from the first page
 
 ## TODO
 
+* Readme > vscode is stripping double spaces of end of lines that is preventing new lines on readme
 * Add > check if it exists before
 * Unit tests
