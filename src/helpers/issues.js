@@ -49,34 +49,36 @@ const updateRepository = async repository => {
  * That will be called every hour by app.js
  */
 export const processEntireDatabase = async () => {
-  try {
+  // eslint-disable-next-line no-console
+  console.log("Starting processEntireDatabase");
+
+  const repositories = await models.repositories.find().catch(err => {
     // eslint-disable-next-line no-console
-    console.log("Starting processEntireDatabase");
+    console.log(err);
+  });
 
-    const repositories = await models.repositories.find();
+  if (!repositories) return false;
 
-    /*
-     * Loops with async call inside of it DON'T block the thred or event loop ou tasks queue
-     * See my POC about it here: https://github.com/fernandobhz/poc-nodejs-for-await-blocking
+  /*
+   * Loops with async call inside of it DON'T block the thred or event loop ou tasks queue
+   * See my POC about it here: https://github.com/fernandobhz/poc-nodejs-for-await-blocking
+   */
+  // eslint-disable-next-line no-restricted-syntax
+  for (const repository of repositories) {
+    /**
+     * I need that each loop occurs after the previous one
      */
-    // eslint-disable-next-line no-restricted-syntax
-    for (const repository of repositories) {
+    // eslint-disable-next-line no-await-in-loop
+    await updateRepository(repository).catch(err => {
       /**
-       * I need that each loop occurs after the previous one
+       * Event with error on this repository keep processing others
        */
-      // eslint-disable-next-line no-await-in-loop
-      await updateRepository(repository);
-    }
-
-    // eslint-disable-next-line no-console
-    console.log("Finishing successfulyy processEntireDatabase");
-    return true;
-  } catch (err) {
-    // eslint-disable-next-line no-console
-    console.log("Finishing with error processEntireDatabase");
-    // eslint-disable-next-line no-console
-    console.error(err);
-    // It might be a good idea to send email to the dev team.
-    return false;
+      // eslint-disable-next-line no-console
+      console.error(err);
+    });
   }
+
+  // eslint-disable-next-line no-console
+  console.log("Finishing successfulyy processEntireDatabase");
+  return true;
 };
