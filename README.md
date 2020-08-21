@@ -58,6 +58,10 @@ If all values has been requested properly
 if the pagination of a repository fails on middle of it
 It'll continue on next repository at the first page
 
+### Joi validation on client request or express validator
+
+It's missing a code to valid user inputs
+
 ## What's included
 
 * Babel
@@ -79,8 +83,9 @@ It'll continue on next repository at the first page
 
 * Aug 18, 2020 5:10 PM  to  Aug 19, 2020 02:40 AM  =  7:30
 * Aug 19, 2020 5:00 PM  to  Aug 19, 2020 11:49 PM  -  6:49
+* Aug 20, 2020 5:12 PM  to  Aug 20, 2020
 ---
-* Total: 14:19
+* Total: 14:19 +Aug 20 =
 
 ## TODO
 
