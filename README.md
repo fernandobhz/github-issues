@@ -52,8 +52,8 @@ to be fixed. Check if there is offical way to paginate on github api or
 check if the last page exists without throwing errors
 
 Pagination is relying only on github, it's not checking the issue/resource number
-If every resource/issue is numbered, it should check after pagination
-If all values has been requrested
+If every resource/issue is numbered, it should check it after pagination ends
+If all values has been requested properly
 
 *Fault tolerance* That same issue, if the pagination of a repository fails on middle of it
 It continues on next repository from the first page
