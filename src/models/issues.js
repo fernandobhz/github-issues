@@ -11,8 +11,6 @@ const schema = new Schema({
   },
   title: {
     type: String,
-    minlength: 2,
-    maxlength: 1000,
     required: [true, "title is required"],
   },
   number: {
