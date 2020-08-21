@@ -6,5 +6,6 @@ export const register = (req, res, next) =>
       path: req.path,
       method: req.method,
       params: req.method === "GET" ? req.query : req.body,
+      user: req.who?.email,
     })
     .then(() => next());

@@ -30,6 +30,6 @@ router.post("/close-account", auth, (req, res, next) =>
     email: req.body.email,
     password: req.body.password,
   })
-    .then(data => res.json(data))
+    .then(() => res.status(204).end())
     .catch(next)
 );

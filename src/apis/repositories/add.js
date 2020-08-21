@@ -9,7 +9,7 @@ import { ExposableError } from "../../classes/errors";
  *  post:
  *    tags:
  *      - Repository
- *    description: Add a repository to database, the system will update the stats every hour
+ *    description: Add a repository to database, the system will update the stats periodically according to the STATS_UPDATE_PERIODICITY env var
  *    produces:
  *      - application/json
  *    responses:

@@ -1,6 +1,9 @@
 import { model, Schema } from "mongoose";
 
 const schema = new Schema({
+  user: {
+    type: String,
+  },
   path: {
     type: String,
     required: [true, "Path is required"],

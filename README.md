@@ -7,6 +7,7 @@
 * JWT_SECRET: A secret password to encrypt JWT
 * MONGO_CONNECTION_STRING: The mongodb connection string
 * GITHUB_API_ENDPOINT: The github api, this is optional there is a default value to "https://api.github.com/"
+* STATS_UPDATE_PERIODICITY: The amount in milliseconds to update the stats, default to 24h
 
 ## GITHub Credentials
 *IMPORTANT*

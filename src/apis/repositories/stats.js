@@ -7,7 +7,7 @@ import * as models from "../../models";
  *  get:
  *    tags:
  *      - Repository
- *    description: List all stats of repository, the stats is updated every hour
+ *    description: List all stats of repository, the system will update the stats periodically according to the STATS_UPDATE_PERIODICITY env var, the avg and std unit is in milliseconds
  *    produces:
  *      - application/json
  *    responses:
@@ -15,4 +15,6 @@ import * as models from "../../models";
  *        description: register
  */
 export const stats = () =>
-  models.issues.aggregate([{ $group: { _id: "$repository", avg: { $avg: "$age" }, std: { $stdDevPop: "$age" } } }]);
+  models.issues.aggregate([
+    { $group: { _id: "$repository", qtd: { $max: "$number" }, avg: { $avg: "$age" }, std: { $stdDevPop: "$age" } } },
+  ]);
