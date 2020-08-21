@@ -1,3 +1,6 @@
+/* eslint-disable no-console */
+/* eslint-disable no-await-in-loop */
+/* eslint-disable no-constant-condition */
 import axios from "axios";
 import axiosRateLimit from "axios-rate-limit";
 
@@ -58,6 +61,13 @@ if (!RUNNING_TESTS) {
  * @param {object} paramsWithoutPagination The request params, that where you sould put query string parameters, there is no need to inform the per_page or page params
  */
 const fetchAllPages = async (resource, lambda, paramsWithoutPagination = {}) => {
+  /**
+   * Loops with async call inside of it DO NOT block the main thred/event loop/tasks queue
+   * See my POC about it here: https://github.com/fernandobhz/poc-nodejs-for-await-blocking
+   *
+   * I can't use Promise.all on that function, because, It needs to be processed after the previous one
+   */
+
   const results = [];
 
   const params = {
@@ -66,32 +76,15 @@ const fetchAllPages = async (resource, lambda, paramsWithoutPagination = {}) => 
     page: 1,
   };
 
-  /**
-   * Loops with async call inside of it DON'T block the thred or event loop ou tasks queue
-   * See my POC about it here: https://github.com/fernandobhz/poc-nodejs-for-await-blocking
-   *
-   * I need an infinite loop until I reach the last page
-   * It could be a recursive function as well
-   * But I prefer that one because it is simpler
-   */
-  // eslint-disable-next-line no-constant-condition
   while (true) {
-    /**
-     * That loop is that edge case described in the documentation
-     * https://eslint.org/docs/rules/no-await-in-loop > When not to use it
-     * Each iteration DEPENDS of previous one
-     */
-    // eslint-disable-next-line no-await-in-loop
     const { data } = await api.get(resource, { params });
+
     if (lambda) results.push(...data.map(lambda));
     else results.push(...data);
 
     if (data.length < 100) break;
-    else {
-      // eslint-disable-next-line no-console
-      console.log(`Fetching resource '${resource}' and we are on page '${params.page}' with page size of 100 items`);
-      params.page += 1;
-    }
+    console.log(`Fetching resource '${resource}' and we are on page '${params.page}' with page size of 100 items`);
+    params.page += 1;
   }
 
   return results;
@@ -109,6 +102,6 @@ export const search = (term, lambda) =>
 
 /**
  * It'll list all issues for a given repository
- * @param {string} fullName The full name of repository eg: facebook/react
+ * @param {string} fullName The full name of repository eg: fernandobhz/nodejs-boilerplate
  */
 export const issues = (fullName, lambda) => fetchAllPages(`/repos/${fullName}/issues`, lambda, { state: "all" });
