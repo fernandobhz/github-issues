@@ -95,7 +95,11 @@ const fetchAllPages = async (resource, lambda, paramsWithoutPagination = {}) => 
     else results.push(...data);
 
     if (data.length < 100) break;
-    else params.page += 1;
+    else {
+      // eslint-disable-next-line no-console
+      console.log(`Fetching resource '${resource}' and we are on page '${params.page}' with page size of 100 items`);
+      params.page += 1;
+    }
   }
 
   return results;
