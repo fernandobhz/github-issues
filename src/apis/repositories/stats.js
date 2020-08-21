@@ -17,4 +17,5 @@ import * as models from "../../models";
 export const stats = () =>
   models.issues.aggregate([
     { $group: { _id: "$repository", qtd: { $max: "$number" }, avg: { $avg: "$age" }, std: { $stdDevPop: "$age" } } },
+    { $sort: { _id: 1 } },
   ]);
