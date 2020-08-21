@@ -43,6 +43,18 @@ We are not checking if the result are complete or not.
 We exepct that result even if incomplete, it'll return the most popular repositories with given name
 But in future we should check if there is a way to get full results from github api.
 
+### Pagination
+
+Pagination is relying that the last page will be less than 100 items
+Event though if that happens will not produces errors in the system
+because the error handler will only log this to console, it would be good
+to be fixed. Check if there is offical way to paginate on github api or
+check if the last page exists without throwing errors
+
+Pagination is relying only on github, it's not checking the issue/resource number
+If every resource/issue is numbered, it should check after pagination
+If all values has been requrested
+
 ## What's included
 
 * Babel
@@ -67,5 +79,5 @@ But in future we should check if there is a way to get full results from github 
 
 ## TODO
 
-* Some manuals test with big libs
+* Add > check if it exists before
 * Unit tests
