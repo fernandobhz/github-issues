@@ -1,8 +1,8 @@
 import { Router } from "express";
 import { who } from "./who";
 import { auth } from "./auth";
+import { analytics } from "./analytics";
 import * as apis from "../apis";
-import * as helpers from "../helpers";
 
 export const router = Router();
 
@@ -12,7 +12,7 @@ router.use(who);
 router.use("/users", apis.users.router);
 
 // Analytics
-router.use(helpers.analytics);
+router.use(analytics);
 
 // The regular app routes
 router.use("/repositories", auth, apis.repositories.router);

@@ -1,7 +1,7 @@
 import * as models from "../models";
-import { RUNNING_TESTS } from "../core/config";
+import { RUNNING_TESTS } from "./config";
 
-export default async function analytics(req, res, next) {
+export async function analytics(req, res, next) {
   if (RUNNING_TESTS) return next();
 
   await models.analytics.create({
