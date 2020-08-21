@@ -78,7 +78,5 @@ export const processEntireDatabase = async () => {
     });
   }
 
-  // eslint-disable-next-line no-console
-  console.log("Finishing successfulyy processEntireDatabase");
   return true;
 };
