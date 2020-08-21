@@ -77,8 +77,10 @@ It continues on next repository from the first page
 
 ### Time track
 
-* Aug 18, 2020 5:10 PM  to  Aug 19, 2020 2:40 AM  =  7:30
-* Aug 19, 2020 5:00 PM  to  Aug 19, 2020 ----------------
+* Aug 18, 2020 5:10 PM  to  Aug 19, 2020 02:40 AM  =  7:30
+* Aug 19, 2020 5:00 PM  to  Aug 19, 2020 11:49 PM  -  6:49
+---
+* Total: 14:19
 
 ## TODO
 
