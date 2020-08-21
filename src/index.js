@@ -2,7 +2,7 @@
 import "dotenv/config";
 import { app } from "./core/app";
 import { connect } from "./core/database";
-import { PORT, STATS_UPDATE_PERIODICITY } from "./core/config";
+import { PORT, STATS_UPDATE_PERIODICITY, RUNNING_TESTS } from "./core/config";
 import { processEntireDatabase } from "./helpers/issues";
 
 (async function main() {
@@ -12,7 +12,7 @@ import { processEntireDatabase } from "./helpers/issues";
     app.listen(PORT, () => console.log(new Date(), `Server up at port ${PORT}`));
 
     // Background stats processing
-    if (!process.argv[1].endsWith("mocha")) {
+    if (!RUNNING_TESTS) {
       // eslint-disable-next-line no-console
       console.log(`processEntireDatabase will be called every ${STATS_UPDATE_PERIODICITY} milliseconds`);
       setInterval(processEntireDatabase, STATS_UPDATE_PERIODICITY);

@@ -1,7 +1,8 @@
 import * as models from "../models";
+import { RUNNING_TESTS } from "../core/config";
 
 export default async function analytics(req, res, next) {
-  // if (process.argv[1].endsWith("mocha")) return next();
+  if (RUNNING_TESTS) return next();
 
   await models.analytics.create({
     path: req.path,

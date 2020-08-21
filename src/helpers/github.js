@@ -1,7 +1,7 @@
 import axios from "axios";
 import axiosRateLimit from "axios-rate-limit";
 
-import { GITHUB_API_ENDPOINT, GITHUB_TOKEN } from "../core/config";
+import { GITHUB_API_ENDPOINT, GITHUB_TOKEN, RUNNING_TESTS } from "../core/config";
 
 let api;
 
@@ -41,7 +41,7 @@ const updateRateLimit = () => {
   });
 };
 
-if (!process.argv[1].endsWith("mocha")) {
+if (!RUNNING_TESTS) {
   // Set rate limit on app startup
   updateRateLimit();
 

@@ -1,10 +1,11 @@
 import { Router } from "express";
 import swaggerUi from "swagger-ui-express";
 import swaggerJSDoc from "swagger-jsdoc";
+import { RUNNING_TESTS } from "./config";
 
 export const swagger = Router();
 
-if (!process.argv[1].endsWith("mocha")) {
+if (!RUNNING_TESTS) {
   // Swagger with jsdoc
   const swaggerSpec = swaggerJSDoc({
     definition: {
