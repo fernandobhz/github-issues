@@ -55,6 +55,9 @@ Pagination is relying only on github, it's not checking the issue/resource numbe
 If every resource/issue is numbered, it should check after pagination
 If all values has been requrested
 
+*Fault tolerance* That same issue, if the pagination of a repository fails on middle of it
+It continues on next repository from the first page
+
 ## What's included
 
 * Babel
