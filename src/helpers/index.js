@@ -1,8 +1,7 @@
-import * as messages from "./messages";
 import * as password from "./password";
 import * as jwt from "./jwt";
 import * as github from "./github";
 import * as issues from "./issues";
-import * as analytics from "./analytics";
+import analytics from "./analytics";
 
-export { messages, password, jwt, github, issues, analytics };
+export { password, jwt, github, issues, analytics };

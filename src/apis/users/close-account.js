@@ -41,5 +41,5 @@ export const closeAccount = async ({ email, password }) => {
   const isValid = await helpers.password.verify(password, user.password);
   if (!isValid) throw new UnauthorizedError();
 
-  await models.users.findOneAndDelete({ email });
+  await models.users.remove({ email });
 };

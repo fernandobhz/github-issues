@@ -41,16 +41,15 @@ const updateRateLimit = () => {
   });
 };
 
-/**
- * Set rate limit on app startup
- */
-updateRateLimit();
+if (!process.argv[1].endsWith("mocha")) {
+  // Set rate limit on app startup
+  updateRateLimit();
 
-/**
- * Check every hour about new rate limit,
- * the app could be initiated with a low rate limit
- */
-setInterval(updateRateLimit, 1000 * 3600);
+  // Check every hour about new rate limit, the app could be initiated with a low rate limit
+  // eslint-disable-next-line no-console
+  console.log(`updateRateLimit will be called every hour`);
+  setInterval(updateRateLimit, 1000 * 3600);
+}
 
 /**
  * It'll fetch all pages of and resource in github api using http verb GET
@@ -70,10 +69,8 @@ const fetchAllPages = async (resource, lambda, paramsWithoutPagination = {}) => 
   /**
    * Loops with async call inside of it DON'T block the thred or event loop ou tasks queue
    * See my POC about it here: https://github.com/fernandobhz/poc-nodejs-for-await-blocking
-   */
-
-  /**
-   * I need a infinite loop until I reach the last page
+   *
+   * I need an infinite loop until I reach the last page
    * It could be a recursive function as well
    * But I prefer that one because it is simpler
    */
@@ -86,11 +83,6 @@ const fetchAllPages = async (resource, lambda, paramsWithoutPagination = {}) => 
      */
     // eslint-disable-next-line no-await-in-loop
     const { data } = await api.get(resource, { params });
-
-    /**
-     * If the users pass an lambda (arrow functions in js)
-     * We'll use that to reduce memory usage
-     */
     if (lambda) results.push(...data.map(lambda));
     else results.push(...data);
 
@@ -109,11 +101,11 @@ const fetchAllPages = async (resource, lambda, paramsWithoutPagination = {}) => 
  * It'll perform a search on all repositories names on github.
  * WARNING: It'll only return the most popular results, since github api
  * limit this query with a timout, so, there is no guarentee that all repos will be returned
- * @param {string} name Part or complete name of a repository, eg: react
+ * @param {string} term Part or complete name of a repository, eg: react
  * @param {function} lambda An arrow function to transform results, you might not looking for entire result of github
  */
-export const search = (name, lambda) =>
-  api.get("/search/repositories", { params: { q: name } }).then(({ data }) => data.items.map(lambda));
+export const search = (term, lambda) =>
+  api.get("/search/repositories", { params: { q: term } }).then(({ data }) => data.items.map(lambda));
 
 /**
  * It'll list all issues for a given repository

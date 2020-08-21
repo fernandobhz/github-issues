@@ -27,13 +27,13 @@ import { ExposableError } from "../../classes/errors";
  *          properties:
  *            fullName:
  *              type: string
- *              example: facebook/react
+ *              example: fernandobhz/nodejs-boilerplate
  */
 export const add = async fullName => {
   const existingRepository = await models.repositories.findOne({ fullName });
   if (existingRepository) throw new ExposableError("This repository already exists in database");
   const newRepository = await models.repositories.create({ fullName });
   // Fire and forget the method to update the repository issues
-  helpers.issues.addNewRepository(newRepository);
+  helpers.issues.updateRepository(newRepository);
   return newRepository;
 };

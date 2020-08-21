@@ -15,11 +15,11 @@ import * as helpers from "../../helpers";
  *        description: register
  *    parameters:
  *      - in: query
- *        name: name
+ *        name: term
  *        required: true
  *        description: The term to search for
- *        example: react
+ *        example: fernandobhz/nodejs-boilerplate
  *        scheme:
  *          type: string
  */
-export const search = async name => helpers.github.search(name, item => item.full_name);
+export const search = term => helpers.github.search(term, item => item.full_name);
