@@ -82,7 +82,11 @@ const fetchAllPages = async (resource, lambda, paramsWithoutPagination = {}) => 
     if (lambda) results.push(...data.map(lambda));
     else results.push(...data);
 
-    if (data.length < 100) break;
+    if (data.length < 100) {
+      console.log(`Fetched all pages of resource '${resource}' successfully`);
+      break;
+    }
+
     console.log(`Fetching resource '${resource}' and we are on page '${params.page}' with page size of 100 items`);
     params.page += 1;
   }
