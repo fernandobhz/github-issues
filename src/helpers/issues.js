@@ -3,6 +3,7 @@
 /* eslint-disable no-console */
 import * as models from "../models";
 import * as github from "./github";
+import { RUNNING_TESTS } from "../core/config";
 
 const issueLambda = (issue, repository) => ({
   id: issue.id,
@@ -43,6 +44,8 @@ export const updateRepository = async repository => {
  *
  */
 export const processEntireDatabase = async () => {
+  if (RUNNING_TESTS) return true;
+
   try {
     console.log("Starting processEntireDatabase");
 

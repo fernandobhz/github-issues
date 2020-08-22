@@ -3,6 +3,7 @@
 /* eslint-disable no-constant-condition */
 import axios from "axios";
 import axiosRateLimit from "axios-rate-limit";
+import { withRetry } from "./withRetry";
 
 import { GITHUB_API_ENDPOINT, GITHUB_TOKEN, RUNNING_TESTS } from "../core/config";
 
@@ -76,8 +77,20 @@ const fetchAllPages = async (resource, lambda, paramsWithoutPagination = {}) => 
     page: 1,
   };
 
+  const apiGetWithRetry = withRetry(api.get, (err, retries, when) => {
+    console.log(
+      "withTry.error: ",
+      err.message,
+      " - retries left: ",
+      retries.length,
+      " - next attempt in: ",
+      when,
+      "ms"
+    );
+  });
+
   while (true) {
-    const { data } = await api.get(resource, { params });
+    const { data } = await apiGetWithRetry(resource, { params });
 
     if (lambda) results.push(...data.map(lambda));
     else results.push(...data);

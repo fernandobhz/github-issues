@@ -9,8 +9,9 @@ This software will gather and keep information about github repositories
 * JWT_SECRET: A secret password to encrypt JWT
 * MONGO_CONNECTION_STRING: The mongodb connection string
 * GITHUB_API_ENDPOINT: The github api, this is optional there is a default value to "https://api.github.com/"
+* FIRST_STATS_UPDATE_DELAY: A delay for the first stat update
 * STATS_UPDATE_PERIODICITY: The amount in milliseconds to update the stats, default to 24h
-
+* NETWORK_RETRY_ATTEMPTS: An array with number of seconds to wait before retry another network call, eg: [1, 10, 60, 600]. This means that the first attempt will be delayed in 1 sec, the second one in 10 seconds, the third in 1 minute and the last in 10 minutes
 ## Git Hub Token
 You should inform a GITHUB_TOKEN in .env file  
 It'll upgrade your rate limit from 60 requests per hour to 5000 requests per hour.  
@@ -33,8 +34,7 @@ I would use AWS Serverless (sam cli), but I couldn't use any cloud resources, so
 
 ### Fault tolerance
 
-* All processing occurs in run-time in memory without any fault tolerance, even network fail.
-* All pagination process should be stored to database/or/RabbitMQ to be possible to continue where it stops
+* There is a fault tolerance for network fails in pagination, but it's not robust as a RabbitMQ can be.
 
 ### Github search API
 
@@ -44,7 +44,6 @@ I would use AWS Serverless (sam cli), but I couldn't use any cloud resources, so
 
 * Pagination could do better to detect the last page
 * Pagination could be more performatic
-* Pagination isn't network fault torelant
 
 ### Client data validation
 
@@ -68,7 +67,7 @@ I would use AWS Serverless (sam cli), but I couldn't use any cloud resources, so
 
 ### Time track
 
-* Aug 18, 2020 5:10 PM  to  Aug 19, 2020 02:40 AM  =  9:30
+* Aug 18, 2020 5:10 PM  to  Aug 19, 2020 02:40 AM  -  9:30
 * Aug 19, 2020 5:00 PM  to  Aug 19, 2020 11:49 PM  -  6:49
-* Aug 20, 2020 5:12 PM  to  Aug 20, 2020 8:35 PM   -  3:23
-* *Total: 19:42*
+* Aug 20, 2020 5:12 PM  to  Aug 21, 2020 02:35 PM  -  9:23
+* *Total: 25:42*
