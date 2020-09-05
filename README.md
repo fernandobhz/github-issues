@@ -48,9 +48,3 @@ https://github.com/settings/tokens
 * Git Flow
 * Conventional Commits (feat, fix, refactor, chore, doc, sytle, perf, vendor, test, etc..
 
-### Time track
-
-* Aug 18, 2020 5:10 PM  to  Aug 19, 2020 02:40 AM  -  9:30
-* Aug 19, 2020 5:00 PM  to  Aug 19, 2020 11:49 PM  -  6:49
-* Aug 20, 2020 5:12 PM  to  Aug 21, 2020 02:35 PM  -  9:23
-* *Total: 25:42*
